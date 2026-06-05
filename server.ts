@@ -7,9 +7,12 @@ import { createServer as createViteServer } from 'vite';
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS?.split(',').filter(Boolean) || ['http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
@@ -67,18 +70,18 @@ app.get('/api/shopify/stores', async (req, res) => {
        
        const { shop } = await resp.json();
        
-       // Extracted shop data combined with a few mock placeholders 
-       // since full BI metrics require extensive pagination querying via Shopify Admin API
+       // Extracted shop data. 
+       // Real BI metrics require pagination queries via Shopify Admin API (e.g. GraphQL for orders, products)
        return {
          id: shop.id.toString(),
          name: shop.name || shop.domain,
          url: shop.domain,
          status: 'active',
-         revenue: Math.floor(Math.random() * 100000) + 10000, 
-         growth: Number(((Math.random() * 20) - 5).toFixed(1)),        
-         orders: Math.floor(Math.random() * 1000) + 100,    
-         customers: Math.floor(Math.random() * 500) + 50,  
-         inventoryValue: Math.floor(Math.random() * 200000) + 50000,
+         revenue: 0, 
+         growth: 0,        
+         orders: 0,    
+         customers: 0,  
+         inventoryValue: 0,
          region: shop.country_name || 'Global',
          connected: true
        };
