@@ -1,0 +1,6 @@
+{
+  "name": "Shopify Command Center",
+  "description": "Enterprise-level multi-store Shopify operations dashboard with premium Dark Theme analytics and command palette interface.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
