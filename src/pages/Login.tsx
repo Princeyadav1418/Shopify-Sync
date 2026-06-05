@@ -10,14 +10,16 @@ export function Login() {
   const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string || email;
     setIsLoading(true);
     // Simulate API Auth Request
     setTimeout(() => {
       login(
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.stub.token',
-        { id: 'usr_1', name: 'Admin Executive', email: 'admin@company.com', role: 'admin' },
+        { id: 'usr_1', name: email.split('@')[0], email: email, role: 'admin' },
         3600 // 1 hour session
       );
     }, 1000);
@@ -95,14 +97,14 @@ export function Login() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Work Email</Label>
-                <Input id="email" type="email" placeholder="admin@company.com" defaultValue="admin@company.com" required className="h-11 bg-secondary/50 border-transparent focus-visible:ring-primary/20" />
+                <Input id="email" name="email" type="email" placeholder="admin@company.com" required className="h-11 bg-secondary/50 border-transparent focus-visible:ring-primary/20" />
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
                   <a href="#" className="text-xs text-muted-foreground hover:text-foreground hover:underline transition-all">Forgot password?</a>
                 </div>
-                <Input id="password" type="password" placeholder="••••••••" defaultValue="password123" required className="h-11 bg-secondary/50 border-transparent focus-visible:ring-primary/20" />
+                <Input id="password" name="password" type="password" placeholder="••••••••" required className="h-11 bg-secondary/50 border-transparent focus-visible:ring-primary/20" />
               </div>
             </div>
 

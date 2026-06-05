@@ -160,48 +160,48 @@ export function Dashboard() {
       >
         <MetricCard 
           title="Gross Revenue" 
-          value="₹253,700.00" 
-          change="+12.5%" 
+          value={`₹${connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0).toLocaleString()}`}
+          change="+0%" 
           trend="up" 
           icon={DollarSign}
           color="var(--color-chart-1)"
-          subtitle="Projected: ₹310k EOM"
+          subtitle="Dynamic Total"
         />
         <MetricCard 
           title="Profit (Est)" 
-          value="₹82,452.00" 
-          change="+14.2%" 
+          value={`₹${(connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0) * 0.3).toLocaleString()}`}
+          change="+0%" 
           trend="up" 
           icon={Activity}
           color="var(--color-chart-2)"
-          subtitle="Margin: 32.5%"
+          subtitle="Dynamic Est"
         />
         <MetricCard 
           title="Total Orders" 
-          value="2,850" 
-          change="+8.2%" 
+          value={connectedStores.reduce((acc, s) => acc + (s.orders || 0), 0).toLocaleString()} 
+          change="+0%" 
           trend="up" 
           icon={ShoppingCart} 
           color="var(--color-chart-3)"
-          subtitle="42 pending fulfillment"
+          subtitle="Dynamic Total"
         />
         <MetricCard 
           title="Active Customers" 
-          value="1,770" 
-          change="-2.4%" 
-          trend="down" 
+          value={connectedStores.reduce((acc, s) => acc + (s.customers || 0), 0).toLocaleString()} 
+          change="+0%" 
+          trend="up" 
           icon={Users} 
           color="var(--color-chart-5)"
-          subtitle="LTV: ₹420.00"
+          subtitle="Dynamic Total"
         />
         <MetricCard 
           title="Inventory Value" 
-          value="₹520k" 
-          change="+4.1%" 
+          value={`₹${(connectedStores.reduce((acc, s) => acc + (s.inventoryValue || 0), 0) / 1000).toFixed(1)}k`}
+          change="+0%" 
           trend="up" 
           icon={Box} 
           color="var(--color-chart-4)"
-          subtitle="₹45k dead stock"
+          subtitle="Dynamic Total"
         />
       </motion.div>
 
