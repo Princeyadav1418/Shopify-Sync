@@ -67,6 +67,7 @@ export function Dashboard() {
   }, []);
 
   
+  const PROFIT_MARGIN = 0.3;
   const totalRevenue = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0), [connectedStores]);
   const totalOrders = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.orders || 0), 0), [connectedStores]);
   const totalCustomers = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.customers || 0), 0), [connectedStores]);
@@ -176,7 +177,7 @@ export function Dashboard() {
         />
         <MetricCard 
           title="Profit (Est)" 
-          value={`₹${(totalRevenue * 0.3).toLocaleString()}`}}
+          value={`₹${(totalRevenue * PROFIT_MARGIN).toLocaleString()}`}}
           change="+0%" 
           trend="up" 
           icon={Activity}

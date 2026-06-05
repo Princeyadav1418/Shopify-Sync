@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:5173'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',').filter(Boolean) || ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
 app.use(express.json());
