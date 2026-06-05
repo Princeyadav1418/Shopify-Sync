@@ -66,7 +66,14 @@ export function Dashboard() {
     fetchDashboardData();
   }, []);
 
+  
+  const totalRevenue = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0), [connectedStores]);
+  const totalOrders = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.orders || 0), 0), [connectedStores]);
+  const totalCustomers = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.customers || 0), 0), [connectedStores]);
+  const totalInventory = React.useMemo(() => connectedStores.reduce((acc, s) => acc + (s.inventoryValue || 0), 0), [connectedStores]);
+
   return (
+
     <div className="p-6 lg:p-8 max-w-[1600px] mx-auto space-y-6 pb-20">
       <motion.div 
         initial={{ opacity: 0, y: -10 }} 
@@ -160,7 +167,7 @@ export function Dashboard() {
       >
         <MetricCard 
           title="Gross Revenue" 
-          value={`₹${connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0).toLocaleString()}`}
+          value={`₹${totalRevenue.toLocaleString()}`}}
           change="+0%" 
           trend="up" 
           icon={DollarSign}
@@ -169,7 +176,7 @@ export function Dashboard() {
         />
         <MetricCard 
           title="Profit (Est)" 
-          value={`₹${(connectedStores.reduce((acc, s) => acc + (s.revenue || 0), 0) * 0.3).toLocaleString()}`}
+          value={`₹${(totalRevenue * 0.3).toLocaleString()}`}}
           change="+0%" 
           trend="up" 
           icon={Activity}
@@ -178,7 +185,7 @@ export function Dashboard() {
         />
         <MetricCard 
           title="Total Orders" 
-          value={connectedStores.reduce((acc, s) => acc + (s.orders || 0), 0).toLocaleString()} 
+          value={totalOrders.toLocaleString()} 
           change="+0%" 
           trend="up" 
           icon={ShoppingCart} 
@@ -187,7 +194,7 @@ export function Dashboard() {
         />
         <MetricCard 
           title="Active Customers" 
-          value={connectedStores.reduce((acc, s) => acc + (s.customers || 0), 0).toLocaleString()} 
+          value={totalCustomers.toLocaleString()} 
           change="+0%" 
           trend="up" 
           icon={Users} 
@@ -196,7 +203,7 @@ export function Dashboard() {
         />
         <MetricCard 
           title="Inventory Value" 
-          value={`₹${(connectedStores.reduce((acc, s) => acc + (s.inventoryValue || 0), 0) / 1000).toFixed(1)}k`}
+          value={`₹${(totalInventory / 1000).toFixed(1)}k`}}
           change="+0%" 
           trend="up" 
           icon={Box} 

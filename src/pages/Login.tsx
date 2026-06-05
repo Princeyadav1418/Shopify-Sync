@@ -13,13 +13,13 @@ export function Login() {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string || email;
+    const emailValue = formData.get('email') as string || 'admin@company.com';
     setIsLoading(true);
     // Simulate API Auth Request
     setTimeout(() => {
       login(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.stub.token',
-        { id: 'usr_1', name: email.split('@')[0], email: email, role: 'admin' },
+        btoa(emailValue + Date.now().toString()),
+        { id: 'usr_1', name: emailValue.split('@')[0], email: emailValue, role: 'admin' },
         3600 // 1 hour session
       );
     }, 1000);
